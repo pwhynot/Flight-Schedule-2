@@ -90,4 +90,4 @@ dataRef
         $("frequency").text(snapshot.val().frequency);
         $("minutesAway").text(snapshot.val().minutesAway);
     });
-//on click event to remove plane
+//on click event to remove flight
