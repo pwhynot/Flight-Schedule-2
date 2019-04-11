@@ -33,9 +33,9 @@ $("#flightSubmit").on("click", function(event) {
     .trim();
 
   dataRef.ref().push({
-    plane: plane,
+    plane: planeName,
     destination: destination,
-    firstPlaneTime: firstPlaneTime,
+    first: firstPlaneTime,
     frequency: frequency,
     dateAdded: firebase.database.ServerValue.TIMESTAMP
   });
@@ -44,6 +44,7 @@ $("#flightSubmit").on("click", function(event) {
   $("#destination").val("");
   $("#firstPlaneTime").val("");
   $("#frequency").val("");
+
   return false;
 });
 
@@ -90,4 +91,5 @@ dataRef
     $("frequency").text(snapshot.val().frequency);
     $("minutesAway").text(snapshot.val().minutesAway);
   });
+
 //on click event to remove plane
