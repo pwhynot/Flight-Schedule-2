@@ -16,7 +16,7 @@ var nextArrival = "";
 var frequency = "";
 var minutesAway = "";
 
-$("#flightSubmit").on("click", function(event) {
+$("#flightSubmit").on("click", function (event) {
   event.preventDefault();
 
   planeName = $("#planeName")
@@ -48,43 +48,38 @@ $("#flightSubmit").on("click", function(event) {
   return false;
 });
 
-dataRef.ref().on("child_added", function(childSnapshot, value) {
-  var pFrequency = "60";
-
-  var firstPTime = "06:00";
-
-  var firstPTimeConverted = moment(firstPTime, "HH:mm").subtract(1, "years");
+dataRef.ref().on("child_added", function (childSnapshot, value) {
+  $(".planeData").append(
+    "<tr><td>" +
+    childSnapshot.val().plane +
+    "</td><td>" +
+    childSnapshot.val().destination +
+    "</td><td>" +
+    childSnapshot.val().nextArrival +
+    "</td><td>" +
+    childSnapshot.val().frequency +
+    "</td><td>" +
+    childSnapshot.val().minutesAway +
+    "</td></tr>"
+  );
+  var startTime = moment(firstPlane, "HH:mm");
 
   var currentTime = moment();
 
-  var diffTime = moment().diff(moment(firstPTimeConverted), "minutes");
+  var difference = moment().diff(moment(startTime), "minutes");
 
-  var pRemainder = diffTime % pFrequency;
+  var remainder = difference % frequency;
 
-  var pMinutesTillFlight = pFrequency - pRemainder;
+  var minutesAway = frequency - remainder;
 
-  var nextPlane = moment().add(pMinutesTillFlight, "minutes");
-
-  $(".planeData").append(
-    "<tr><td>" +
-      childSnapshot.val().plane +
-      "</td><td>" +
-      childSnapshot.val().destination +
-      "</td><td>" +
-      childSnapshot.val().nextArrival +
-      "</td><td>" +
-      childSnapshot.val().frequency +
-      "</td><td>" +
-      childSnapshot.val().minutesAway +
-      "</td></tr>"
-  );
+  var nextArrival = moment().add(minutesAway, "minutes");
 });
 
 dataRef
   .ref()
   .orderByChild("dateAdded")
   .limitToLast(1)
-  .on("child_added", function(snapshot) {
+  .on("child_added", function (snapshot) {
     $("plane").text(snapshot.val().plane);
     $("destination").text(snapshot.val().destination);
     $("nextArrival").text(snapshot.val().nextArrival);
