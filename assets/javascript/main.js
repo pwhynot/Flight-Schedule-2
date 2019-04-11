@@ -62,17 +62,27 @@ dataRef.ref().on("child_added", function (childSnapshot, value) {
     childSnapshot.val().minutesAway +
     "</td></tr>"
   );
-  var startTime = moment(firstPlane, "HH:mm");
+  var pFrequency = 60;
+
+  var startTime = "06:00";
+
+  var startTimeConverted = moment(firstPlaneTime, "HH:mm").subtract(1, "years");
+  console.log(startTimeConverted);
 
   var currentTime = moment();
+  console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
-  var difference = moment().diff(moment(startTime), "minutes");
+  var diffTime = moment().diff(moment(startTimeConverted), "minutes");
+  console.log("DIFFERENCE IN TIME: " + diffTime);
 
-  var remainder = difference % frequency;
+  var remainder = diffTime % frequency;
+  console.log(remainder);
 
-  var minutesAway = frequency - remainder;
+  var minutesAway = pFrequency - remainder;
+  console.log("MINUTES TILL PLANE: " + minutesAway);
 
   var nextArrival = moment().add(minutesAway, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextArrival).format("hh:mm"));
 });
 
 dataRef
