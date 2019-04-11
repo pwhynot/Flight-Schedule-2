@@ -49,6 +49,22 @@ $("#flightSubmit").on("click", function(event) {
 });
 
 dataRef.ref().on("child_added", function(childSnapshot, value) {
+  var pFrequency = "60";
+
+  var firstPTime = "06:00";
+
+  var firstPTimeConverted = moment(firstPTime, "HH:mm").subtract(1, "years");
+
+  var currentTime = moment();
+
+  var diffTime = moment().diff(moment(firstPTimeConverted), "minutes");
+
+  var pRemainder = diffTime % pFrequency;
+
+  var pMinutesTillFlight = pFrequency - pRemainder;
+
+  var nextPlane = moment().add(pMinutesTillFlight, "minutes");
+
   $(".planeData").append(
     "<tr><td>" +
       childSnapshot.val().plane +
@@ -63,22 +79,6 @@ dataRef.ref().on("child_added", function(childSnapshot, value) {
       "</td></tr>"
   );
 });
-
-var pFrequency = "";
-
-var firstPTime = "06:00";
-
-var firstPTimeConverted = moment(firstPTime, "HH:mm").subtract(1, "years");
-
-var currentTime = moment();
-
-var diffTime = moment().diff(moment(firstPTimeConverted), "minutes");
-
-var pRemainder = diffTime % pFrequency;
-
-var pMinutesTillFlight = pFrequency - pRemainder;
-
-var nextPlane = moment().add(pMinutesTillFlight, "minutes");
 
 dataRef
   .ref()
