@@ -12,9 +12,9 @@ var dataRef = firebase.database();
 
 var plane = "";
 var destination = "";
-var nextArrival = "";
+var nextArrival = "00:00";
 var frequency = "";
-var minutesAway = "";
+var minutesAway = "00:00";
 
 $("#flightSubmit").on("click", function(event) {
   event.preventDefault();
