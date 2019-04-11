@@ -51,7 +51,7 @@ $("#flightSubmit").on("click", function(event) {
 dataRef.ref().on("child_added", function(childSnapshot, value) {
   $(".planeData").append(
     "<tr><td>" +
-      childSnapshot.val().planeName +
+      childSnapshot.val().plane +
       "</td><td>" +
       childSnapshot.val().destination +
       "</td><td>" +
