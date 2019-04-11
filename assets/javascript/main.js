@@ -66,7 +66,7 @@ dataRef.ref().on("child_added", function (childSnapshot, value) {
 
   var startTime = "06:00";
 
-  var startTimeConverted = moment(firstPlaneTime, "HH:mm").subtract(1, "years");
+  var startTimeConverted = moment(firstPlaneTime, "hh:mm").subtract(1, "years");
   console.log(startTimeConverted);
 
   var currentTime = moment();
