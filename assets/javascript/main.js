@@ -16,7 +16,7 @@ var nextArrival = "";
 var frequency = "";
 var minutesAway = "";
 
-$("#flightSubmit").on("click", function (event) {
+$("#flightSubmit").on("click", function(event) {
   event.preventDefault();
 
   planeName = $("#planeName")
@@ -48,25 +48,25 @@ $("#flightSubmit").on("click", function (event) {
   return false;
 });
 
-dataRef.ref().on("child_added", function (childSnapshot, value) {
+dataRef.ref().on("child_added", function(childSnapshot, value) {
   $(".planeData").append(
     "<tr><td>" +
-    childSnapshot.val().plane +
-    "</td><td>" +
-    childSnapshot.val().destination +
-    "</td><td>" +
-    childSnapshot.val().nextArrival +
-    "</td><td>" +
-    childSnapshot.val().frequency +
-    "</td><td>" +
-    childSnapshot.val().minutesAway +
-    "</td></tr>"
+      childSnapshot.val().plane +
+      "</td><td>" +
+      childSnapshot.val().destination +
+      "</td><td>" +
+      childSnapshot.val().nextArrival +
+      "</td><td>" +
+      childSnapshot.val().frequency +
+      "</td><td>" +
+      childSnapshot.val().minutesAway +
+      "</td></tr>"
   );
   var pFrequency = 60;
 
   var startTime = "06:00";
 
-  var startTimeConverted = moment(firstPlaneTime, "hh:mm").subtract(1, "years");
+  var startTimeConverted = moment(startTime, "hh:mm").subtract(1, "years");
   console.log(startTimeConverted);
 
   var currentTime = moment();
@@ -78,18 +78,18 @@ dataRef.ref().on("child_added", function (childSnapshot, value) {
   var remainder = diffTime % frequency;
   console.log(remainder);
 
-  var minutesAway = pFrequency - remainder;
-  console.log("MINUTES TILL PLANE: " + minutesAway);
+  var minutesTillNextP = pFrequency - remainder;
+  console.log("MINUTES TILL PLANE: " + minutesTillNextP);
 
-  var nextArrival = moment().add(minutesAway, "minutes");
-  console.log("ARRIVAL TIME: " + moment(nextArrival).format("hh:mm"));
+  var nextFlight = moment().add(minutesTillNextP, "minutes");
+  console.log("ARRIVAL TIME: " + moment(nextFlight).format("hh:mm"));
 });
 
 dataRef
   .ref()
   .orderByChild("dateAdded")
   .limitToLast(1)
-  .on("child_added", function (snapshot) {
+  .on("child_added", function(snapshot) {
     $("plane").text(snapshot.val().plane);
     $("destination").text(snapshot.val().destination);
     $("nextArrival").text(snapshot.val().nextArrival);
